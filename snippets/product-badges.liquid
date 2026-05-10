@@ -1,0 +1,5 @@
+<div class="badges">
+  {% for tag in product.tags limit: 3 %}
+    <span class="badge">{{ tag }}</span>
+  {% endfor %}
+</div>

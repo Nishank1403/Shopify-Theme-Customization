@@ -1,0 +1,52 @@
+{% comment %}
+  Main theme layout for the Shopify Theme Customization project.
+{% endcomment %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page_title }} · {{ shop.name }}</title>
+    {{ content_for_header }}
+    <link rel="stylesheet" href="{{ 'styles.css' | asset_url }}">
+  </head>
+  <body class="theme">
+    <header class="site-header">
+      <div class="container header-grid">
+        <a class="logo" href="{{ routes.root_url }}">{{ shop.name }}</a>
+        <nav class="nav">
+          {% for link in linklists.main-menu.links %}
+            <a href="{{ link.url }}" class="nav-link">{{ link.title }}</a>
+          {% endfor %}
+        </nav>
+        <a href="{{ routes.cart_url }}" class="cart-link">
+          Cart <span class="cart-count">({{ cart.item_count }})</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="site-main">
+      {{ content_for_layout }}
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <h4>About {{ shop.name }}</h4>
+          <p>{{ shop.description | default: 'Thoughtful products crafted with care.' }}</p>
+        </div>
+        <div>
+          <h4>Support</h4>
+          <ul class="footer-links">
+            <li><a href="{{ routes.search_url }}">Search</a></li>
+            <li><a href="{{ routes.account_url }}">Account</a></li>
+            <li><a href="mailto:{{ shop.email }}">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="copyright">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+    </footer>
+
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+  </body>
+</html>

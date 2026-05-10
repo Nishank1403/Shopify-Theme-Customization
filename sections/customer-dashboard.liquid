@@ -1,0 +1,41 @@
+<section class="section">
+  <div class="container customer-dashboard">
+    <div>
+      <h1>Welcome back, {{ customer.first_name | default: 'Customer' }}</h1>
+      <p class="muted">Manage your orders, saved items, and account details.</p>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h3>Loyalty status</h3>
+          <p class="muted">{{ customer.orders_count }} orders placed</p>
+        </div>
+        <div class="feature-card">
+          <h3>Default address</h3>
+          <p class="muted">{{ customer.default_address | format_address }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="order-list">
+      <h2>Recent orders</h2>
+      {% if customer.orders.size > 0 %}
+        {% for order in customer.orders limit: 3 %}
+          <div class="order-card">
+            <strong>{{ order.name }}</strong>
+            <p class="muted">Placed on {{ order.created_at | date: '%B %d, %Y' }}</p>
+            <p>{{ order.total_price | money }} · {{ order.financial_status_label }}</p>
+            <a href="{{ order.customer_url }}">View order</a>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="muted">No orders yet. Start shopping to see your history here.</p>
+      {% endif %}
+      <a class="primary-button" href="{{ routes.all_products_collection_url }}">Shop all products</a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Customer Dashboard",
+  "settings": []
+}
+{% endschema %}

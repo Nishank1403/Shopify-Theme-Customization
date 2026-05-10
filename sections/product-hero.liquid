@@ -1,0 +1,71 @@
+{% assign selected_variant = product.selected_or_first_available_variant %}
+<section class="section">
+  <div class="container hero-grid">
+    <div class="product-gallery">
+      {% if product.featured_image %}
+        <img src="{{ product.featured_image | image_url: width: 900 }}" alt="{{ product.title }}">
+      {% else %}
+        <img src="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/placeholder-image.png" alt="Placeholder">
+      {% endif %}
+    </div>
+    <div class="product-info">
+      <div>
+        <h1>{{ product.title }}</h1>
+        {% render 'product-badges', product: product %}
+      </div>
+      <div>
+        {% render 'price', price: selected_variant.price, compare_at_price: selected_variant.compare_at_price %}
+        <p class="muted">{{ product.vendor }} · {{ product.type }}</p>
+      </div>
+      <div>
+        {{ product.description | truncatewords: 40 }}
+      </div>
+      <form method="post" action="/cart/add" class="product-form">
+        <input type="hidden" name="id" value="{{ selected_variant.id }}">
+        {% if product.variants.size > 1 %}
+          <label for="variant-selector">Choose a style</label>
+          <select name="id" id="variant-selector">
+            {% for variant in product.variants %}
+              <option value="{{ variant.id }}" {% if variant == selected_variant %}selected{% endif %}>
+                {{ variant.title }} - {{ variant.price | money }}
+              </option>
+            {% endfor %}
+          </select>
+        {% endif %}
+        <div class="quantity-control">
+          <label for="quantity">Quantity</label>
+          <div>
+            <button class="secondary-button" type="button" data-quantity-minus>-</button>
+            <input id="quantity" type="number" name="quantity" min="1" value="1" data-quantity-input>
+            <button class="secondary-button" type="button" data-quantity-plus>+</button>
+          </div>
+        </div>
+        <button class="primary-button" type="submit">Add to cart</button>
+      </form>
+      <div class="trust-grid">
+        <div>
+          <strong>Fast shipping</strong>
+          <p class="muted">Ships within {{ settings.shipping_window | default: '2-3 days' }}</p>
+        </div>
+        <div>
+          <strong>Easy returns</strong>
+          <p class="muted">30-day hassle-free returns</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "shipping_window",
+      "label": "Shipping window",
+      "default": "2-3 days"
+    }
+  ]
+}
+{% endschema %}

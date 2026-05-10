@@ -1,0 +1,31 @@
+[
+  {
+    "name": "Theme settings",
+    "settings": [
+      {
+        "type": "color",
+        "id": "primary_color",
+        "label": "Primary color",
+        "default": "#2563eb"
+      },
+      {
+        "type": "color",
+        "id": "secondary_color",
+        "label": "Secondary color",
+        "default": "#0f172a"
+      },
+      {
+        "type": "color",
+        "id": "accent_color",
+        "label": "Accent color",
+        "default": "#14b8a6"
+      },
+      {
+        "type": "text",
+        "id": "shipping_window",
+        "label": "Shipping window text",
+        "default": "2-3 days"
+      }
+    ]
+  }
+]

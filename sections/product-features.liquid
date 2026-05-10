@@ -1,0 +1,56 @@
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <h2>Why customers love it</h2>
+        <p class="muted">Highlight key selling points and product differentiators.</p>
+      </div>
+      <a class="secondary-button" href="{{ routes.collections_url }}/all">Browse more</a>
+    </div>
+    <div class="feature-grid">
+      {% for block in section.blocks %}
+        <div class="feature-card">
+          <h3>{{ block.settings.title }}</h3>
+          <p class="muted">{{ block.settings.description }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Features",
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Crafted for everyday use"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Share how this product solves a customer need."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Product Features",
+      "blocks": [
+        {"type": "feature"},
+        {"type": "feature"},
+        {"type": "feature"}
+      ]
+    }
+  ]
+}
+{% endschema %}
