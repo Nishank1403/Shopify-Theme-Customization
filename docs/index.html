@@ -3,26 +3,37 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Shopify Theme Customization Preview</title>
+    <title>Shopify Theme Customization Demo</title>
     <style>
       :root {
         color-scheme: light;
         font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
         background: #f8fafc;
         color: #0f172a;
+        --primary: #2563eb;
+        --secondary: #0f172a;
+        --accent: #14b8a6;
+        --muted: #64748b;
+        --border: #e2e8f0;
+        --card-bg: #ffffff;
       }
       body {
         margin: 0;
         padding: 0;
+        background: #f8fafc;
       }
       header {
         padding: 32px 16px;
-        background: #0f172a;
+        background: var(--secondary);
         color: #ffffff;
       }
       header h1 {
         margin: 0 0 8px;
         font-size: 28px;
+      }
+      header p {
+        margin: 0;
+        color: #cbd5f5;
       }
       .container {
         width: min(1100px, 92%);
@@ -36,16 +47,17 @@
         align-items: center;
       }
       .card {
-        background: #ffffff;
+        background: var(--card-bg);
         border-radius: 16px;
         padding: 24px;
         box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+        border: 1px solid var(--border);
       }
       .pill {
         display: inline-block;
         padding: 6px 12px;
         border-radius: 999px;
-        background: #2563eb;
+        background: var(--primary);
         color: #fff;
         font-size: 12px;
         margin-bottom: 12px;
@@ -59,19 +71,113 @@
       .section {
         padding: 24px 0 48px;
       }
-      footer {
-        background: #0f172a;
-        color: #e2e8f0;
-        padding: 24px 0;
-      }
-      a.button {
+      .button {
         display: inline-block;
         padding: 10px 18px;
         border-radius: 12px;
-        background: #14b8a6;
+        background: var(--accent);
         color: #0f172a;
         text-decoration: none;
         font-weight: 600;
+        border: none;
+        cursor: pointer;
+      }
+      .button.secondary {
+        background: #ffffff;
+        border: 1px solid var(--primary);
+        color: var(--primary);
+      }
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+      }
+      .product-card img {
+        width: 100%;
+        border-radius: 12px;
+        margin-bottom: 12px;
+      }
+      .badge {
+        display: inline-block;
+        background: #e0f2fe;
+        color: #0369a1;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+      }
+      .product-detail {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+        align-items: start;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .price {
+        font-size: 20px;
+        font-weight: 700;
+      }
+      .compare {
+        text-decoration: line-through;
+        color: var(--muted);
+        margin-left: 8px;
+        font-weight: 400;
+        font-size: 14px;
+      }
+      .quantity-control {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      input[type="number"],
+      select,
+      input[type="text"] {
+        padding: 8px 10px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        font-size: 14px;
+      }
+      .split {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 24px;
+      }
+      .list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 12px;
+      }
+      .order-card {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 16px;
+      }
+      .invoice-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 12px;
+      }
+      .invoice-table th,
+      .invoice-table td {
+        border-bottom: 1px solid var(--border);
+        padding: 8px 0;
+        text-align: left;
+      }
+      footer {
+        background: var(--secondary);
+        color: #e2e8f0;
+        padding: 24px 0;
+      }
+      .notice {
+        background: #fef9c3;
+        color: #854d0e;
+        padding: 12px 16px;
+        border-radius: 12px;
+        border: 1px solid #fde68a;
+        margin-top: 16px;
       }
     </style>
   </head>
@@ -79,51 +185,109 @@
     <header>
       <div class="container">
         <h1>Shopify Theme Customization</h1>
-        <p>Portfolio preview for Liquid templates, reusable sections, and customer-facing UI.</p>
+        <p>Working demo: product flow, cart, invoice, and customer dashboard with demo data.</p>
       </div>
     </header>
 
     <main class="container">
       <section class="hero">
         <div>
-          <span class="pill">Live Preview</span>
-          <h2>Product page, customer dashboard, invoice, and email templates</h2>
-          <p>
-            This preview showcases the UI layout and component styling used in the Shopify Liquid
-            theme. The actual Liquid templates live in the repository and can be uploaded to a
-            Shopify theme when you have a store.
+          <span class="pill">Interactive Demo</span>
+          <h2>Preview the storefront features in one place</h2>
+          <p class="muted">
+            This GitHub Pages demo simulates the Liquid theme using JavaScript and demo data.
+            The full Liquid templates remain in the repository for Shopify upload later.
           </p>
-          <a class="button" href="https://github.com/Nishank1403/Shopify-Theme-Customization">
+          <button class="button" id="scroll-to-product">View product demo</button>
+          <a class="button secondary" href="https://github.com/Nishank1403/Shopify-Theme-Customization">
             View repository
           </a>
         </div>
         <div class="card">
           <h3>Highlights</h3>
           <ul>
-            <li>Responsive product hero and variant selector</li>
-            <li>Reusable feature and dashboard sections</li>
-            <li>Invoice template with dynamic totals</li>
-            <li>Order confirmation email layout</li>
+            <li>Demo product variants, cart totals, and pricing logic</li>
+            <li>Customer dashboard with recent orders</li>
+            <li>Invoice preview generated from cart data</li>
+            <li>Reusable section styling and responsive layout</li>
           </ul>
+          <div class="notice">No Shopify store required. Everything runs locally in the browser.</div>
+        </div>
+      </section>
+
+      <section id="product-demo" class="section">
+        <h3>Product Page Demo</h3>
+        <div class="product-detail">
+          <div class="card">
+            <img id="product-image" src="" alt="Product" />
+          </div>
+          <div class="card">
+            <span class="badge" id="product-tag"></span>
+            <h2 id="product-title"></h2>
+            <p class="muted" id="product-subtitle"></p>
+            <div class="price">
+              <span id="product-price"></span>
+              <span class="compare" id="product-compare"></span>
+            </div>
+            <p id="product-description"></p>
+            <label for="variant">Variant</label>
+            <select id="variant"></select>
+            <div class="quantity-control">
+              <button class="button secondary" id="qty-minus">-</button>
+              <input id="quantity" type="number" value="1" min="1" />
+              <button class="button secondary" id="qty-plus">+</button>
+            </div>
+            <button class="button" id="add-to-cart">Add to cart</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h3>Cart & Invoice Preview</h3>
+        <div class="split">
+          <div class="card">
+            <h4>Cart</h4>
+            <ul class="list" id="cart-list"></ul>
+            <p><strong>Subtotal:</strong> <span id="cart-subtotal"></span></p>
+            <p><strong>Tax (8%):</strong> <span id="cart-tax"></span></p>
+            <p><strong>Total:</strong> <span id="cart-total"></span></p>
+          </div>
+          <div class="card">
+            <h4>Invoice Preview</h4>
+            <table class="invoice-table">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Qty</th>
+                  <th>Price</th>
+                </tr>
+              </thead>
+              <tbody id="invoice-body"></tbody>
+            </table>
+            <p><strong>Total:</strong> <span id="invoice-total"></span></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h3>Customer Dashboard Demo</h3>
+        <div class="split">
+          <div class="card">
+            <h4>Customer Summary</h4>
+            <p><strong>Name:</strong> <span id="customer-name"></span></p>
+            <p><strong>Loyalty Tier:</strong> <span id="customer-tier"></span></p>
+            <p><strong>Default Address:</strong> <span id="customer-address"></span></p>
+          </div>
+          <div class="card">
+            <h4>Recent Orders</h4>
+            <div id="order-list" class="list"></div>
+          </div>
         </div>
       </section>
 
       <section class="section">
         <h3>Reusable Sections</h3>
-        <div class="grid">
-          <div class="card">
-            <strong>Product Features</strong>
-            <p>Flexible blocks for highlighting differentiators and benefits.</p>
-          </div>
-          <div class="card">
-            <strong>Customer Dashboard</strong>
-            <p>Order history, loyalty status, and quick actions in one view.</p>
-          </div>
-          <div class="card">
-            <strong>Invoice Template</strong>
-            <p>Clean summary of cart line items and totals for invoice pages.</p>
-          </div>
-        </div>
+        <div class="grid" id="feature-grid"></div>
       </section>
     </main>
 
@@ -132,5 +296,167 @@
         <p>Ready for Shopify theme upload or portfolio review.</p>
       </div>
     </footer>
+
+    <script>
+      const demoProduct = {
+        title: "Aurora Travel Backpack",
+        subtitle: "Everyday carry · Water-resistant",
+        description:
+          "A sleek travel backpack with smart organization, padded laptop sleeve, and ergonomic straps.",
+        tags: ["Best Seller", "New"],
+        image:
+          "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
+        variants: [
+          { id: 1, name: "Midnight Black", price: 129, compare: 159 },
+          { id: 2, name: "Coastal Blue", price: 129, compare: 149 },
+          { id: 3, name: "Sandstone", price: 119, compare: 139 },
+        ],
+      };
+
+      const featureBlocks = [
+        {
+          title: "Modular storage",
+          description: "Configurable compartments for work and travel essentials.",
+        },
+        {
+          title: "All-day comfort",
+          description: "Breathable straps and balanced weight distribution.",
+        },
+        {
+          title: "Sustainable materials",
+          description: "Recycled nylon with premium finish and durability.",
+        },
+      ];
+
+      const customer = {
+        name: "Nishank Mhatre",
+        tier: "Gold · 12 orders",
+        address: "Mumbai, Maharashtra · 400001",
+        orders: [
+          { id: "#1042", date: "May 2, 2026", total: "$178.00", status: "Delivered" },
+          { id: "#1037", date: "Apr 20, 2026", total: "$96.00", status: "Shipped" },
+          { id: "#1031", date: "Apr 5, 2026", total: "$214.00", status: "Delivered" },
+        ],
+      };
+
+      const cart = [];
+
+      const productImage = document.getElementById("product-image");
+      const productTitle = document.getElementById("product-title");
+      const productSubtitle = document.getElementById("product-subtitle");
+      const productDescription = document.getElementById("product-description");
+      const productTag = document.getElementById("product-tag");
+      const productPrice = document.getElementById("product-price");
+      const productCompare = document.getElementById("product-compare");
+      const variantSelect = document.getElementById("variant");
+      const quantityInput = document.getElementById("quantity");
+      const cartList = document.getElementById("cart-list");
+      const cartSubtotal = document.getElementById("cart-subtotal");
+      const cartTax = document.getElementById("cart-tax");
+      const cartTotal = document.getElementById("cart-total");
+      const invoiceBody = document.getElementById("invoice-body");
+      const invoiceTotal = document.getElementById("invoice-total");
+      const featureGrid = document.getElementById("feature-grid");
+      const orderList = document.getElementById("order-list");
+
+      productImage.src = demoProduct.image;
+      productTitle.textContent = demoProduct.title;
+      productSubtitle.textContent = demoProduct.subtitle;
+      productDescription.textContent = demoProduct.description;
+      productTag.textContent = demoProduct.tags[0];
+
+      demoProduct.variants.forEach((variant) => {
+        const option = document.createElement("option");
+        option.value = variant.id;
+        option.textContent = `${variant.name} · $${variant.price}`;
+        variantSelect.appendChild(option);
+      });
+
+      const updatePrice = () => {
+        const selected = demoProduct.variants.find(
+          (variant) => variant.id === Number(variantSelect.value)
+        );
+        productPrice.textContent = `$${selected.price}`;
+        productCompare.textContent = `$${selected.compare}`;
+      };
+
+      variantSelect.addEventListener("change", updatePrice);
+      updatePrice();
+
+      document.getElementById("qty-minus").addEventListener("click", () => {
+        quantityInput.value = Math.max(1, Number(quantityInput.value) - 1);
+      });
+
+      document.getElementById("qty-plus").addEventListener("click", () => {
+        quantityInput.value = Number(quantityInput.value) + 1;
+      });
+
+      const renderCart = () => {
+        cartList.innerHTML = "";
+        invoiceBody.innerHTML = "";
+        let subtotal = 0;
+        cart.forEach((item) => {
+          subtotal += item.price * item.quantity;
+          const li = document.createElement("li");
+          li.className = "order-card";
+          li.innerHTML = `<strong>${item.title}</strong><p class='muted'>${item.variant}</p><p>$${
+            item.price
+          } × ${item.quantity}</p>`;
+          cartList.appendChild(li);
+
+          const tr = document.createElement("tr");
+          tr.innerHTML = `<td>${item.title}</td><td>${item.quantity}</td><td>$${
+            item.price * item.quantity
+          }</td>`;
+          invoiceBody.appendChild(tr);
+        });
+
+        const tax = subtotal * 0.08;
+        const total = subtotal + tax;
+        cartSubtotal.textContent = `$${subtotal.toFixed(2)}`;
+        cartTax.textContent = `$${tax.toFixed(2)}`;
+        cartTotal.textContent = `$${total.toFixed(2)}`;
+        invoiceTotal.textContent = `$${total.toFixed(2)}`;
+      };
+
+      document.getElementById("add-to-cart").addEventListener("click", () => {
+        const selected = demoProduct.variants.find(
+          (variant) => variant.id === Number(variantSelect.value)
+        );
+        cart.push({
+          title: demoProduct.title,
+          variant: selected.name,
+          price: selected.price,
+          quantity: Number(quantityInput.value),
+        });
+        renderCart();
+      });
+
+      featureBlocks.forEach((block) => {
+        const div = document.createElement("div");
+        div.className = "card";
+        div.innerHTML = `<strong>${block.title}</strong><p class='muted'>${block.description}</p>`;
+        featureGrid.appendChild(div);
+      });
+
+      document.getElementById("customer-name").textContent = customer.name;
+      document.getElementById("customer-tier").textContent = customer.tier;
+      document.getElementById("customer-address").textContent = customer.address;
+
+      customer.orders.forEach((order) => {
+        const div = document.createElement("div");
+        div.className = "order-card";
+        div.innerHTML = `<strong>${order.id}</strong><p class='muted'>${order.date}</p><p>${
+          order.total
+        } · ${order.status}</p>`;
+        orderList.appendChild(div);
+      });
+
+      document.getElementById("scroll-to-product").addEventListener("click", () => {
+        document.getElementById("product-demo").scrollIntoView({ behavior: "smooth" });
+      });
+
+      renderCart();
+    </script>
   </body>
 </html>
